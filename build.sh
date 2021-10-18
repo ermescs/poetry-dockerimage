@@ -3,17 +3,12 @@
 set -e
 
 if [ "a${1}" == "a" ]; then
-    echo "Syntax: ${0} <python version> (<alpine_version>)"
+    echo "Syntax: ${0} <poetry version> <python version> <debian version>"
     exit 1
 fi
 
-REPO="ermescs/poetry:python${1}-alpine"
-BUILD_ARGS="--build-arg PYTHON_VERSION=${1}"
-
-if [ "a${2}" != "a" ]; then
-    REPO="${REPO}${2}"
-    BUILD_ARGS="${BUILD_ARGS} --build-arg ALPINE_VERSION=${2}"
-fi
+REPO="ermescs/poetry:${1}-python${2}-${3}"
+BUILD_ARGS="--build-arg POETRY_VERSION=${1} --build-arg PYTHON_VERSION=${2} --build-arg DEBIAN_VERSION=${3}"
 
 echo "Building '${REPO}'"
 
